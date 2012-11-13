@@ -12,8 +12,7 @@ public class AchServer
 		try
 		{
 			HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
-			server.createContext("/", new AchHandler());
-			server.createContext("/fields", new FieldHandler());
+			server.createContext("/", new FieldHandler());
 			server.setExecutor(null);
 			server.start();
 		} catch(IOException e)
