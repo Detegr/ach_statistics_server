@@ -59,10 +59,10 @@ public class PlayerHandler implements HttpHandler
 							o.put(column, rs.getInt(i));
 							break;
 						case java.sql.Types.NVARCHAR:
-							o.put(column, rs.getNString(i));
+							o.put(column, rs.getNString(i).trim());
 							break;
 						case java.sql.Types.VARCHAR:
-							o.put(column, rs.getString(i));
+							o.put(column, rs.getString(i).trim());
 							break;
 						case java.sql.Types.TINYINT:
 							o.put(column, rs.getInt(i));
@@ -83,7 +83,9 @@ public class PlayerHandler implements HttpHandler
 				}
 				arr.put(o);
 			}
-			response += arr.toString();
+			JSONObject responseobject=new JSONObject();
+			responseobject.put("response", arr);
+			response += responseobject.toString();
 			t.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.getBytes().length);
 			t.getResponseBody().write(response.getBytes());
 			t.close();
