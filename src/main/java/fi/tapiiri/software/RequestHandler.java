@@ -1,6 +1,5 @@
 package fi.tapiiri.software;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -79,19 +78,16 @@ public class RequestHandler implements HttpHandler
 				{
 					val=sb.toString();
 					post.put(key,val);
-					System.out.println("Appending: " + key + " " + val);
 					sb.setLength(0);
 					key=null;
 					val=null;
 				}
 				else sb.append(nextchar);
 			}
-			System.out.println("DERPDERP");
 			if(key!=null)
 			{
 				val=sb.toString();
 				post.put(key,val);
-				System.out.println("Appending: " + key + " " + val);
 				sb.setLength(0);
 				key=null;
 				val=null;
