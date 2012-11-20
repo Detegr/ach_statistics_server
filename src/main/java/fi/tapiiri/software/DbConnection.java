@@ -1,9 +1,9 @@
 package fi.tapiiri.software;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DbConnection
 {
@@ -54,24 +54,17 @@ public class DbConnection
 	 */
 	public ResultSet Get(String[] properties, String from)
 	{
-		Statement s=null;
-		try
-		{
-			s=mConnection.createStatement();
-		}
-		catch(SQLException e)
-		{
-			System.out.println("Failed to execute query: " + e.toString());
-		}
 		String query="SELECT ";
 		int len=properties.length;
 		for(int i=0; i<len-1; ++i) query += properties[i] + ", ";
 		query += properties[len-1] + " FROM " + from;
+
 		ResultSet rs=null;
 		try
 		{
+			PreparedStatement ps=mConnection.prepareStatement(query);
 			System.out.println(query);
-			rs=s.executeQuery(query);
+			rs=ps.executeQuery();
 		}
 		catch(SQLException e)
 		{
