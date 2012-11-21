@@ -72,4 +72,21 @@ public class DbConnection
 		}
 		return rs;
 	}
+
+	public void InsertEvent(int playerid, int matchid, int itemid)
+	{
+		String query="INSERT INTO statistics_event (player_id, match_id, item_id) VALUES(?,?,?)";
+		try
+		{
+			PreparedStatement ps=mConnection.prepareStatement(query);
+			ps.setInt(1, playerid);
+			ps.setInt(2, matchid);
+			ps.setInt(3, itemid);
+			ps.executeQuery();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Failed to execute query: " + e.toString());
+		}
+	}
 }

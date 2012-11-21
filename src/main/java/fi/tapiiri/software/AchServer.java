@@ -14,6 +14,7 @@ public class AchServer
 		try
 		{
 			HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
+			server.createContext("/", new EventHandler(dbc));
 			server.createContext("/players", new RequestHandler(dbc, "player"));
 			server.createContext("/matches", new RequestHandler(dbc, "match"));
 			server.createContext("/items", new RequestHandler(dbc, "statistics_item"));
