@@ -89,4 +89,21 @@ public class DbConnection
 			System.out.println("Failed to execute query: " + e.toString());
 		}
 	}
+
+	public void DeleteEvent(int playerid, int matchid, int itemid)
+	{
+		String query="DELETE FROM statistics_event WHERE player_id=? AND match_id=? AND item_id=?";
+		try
+		{
+			PreparedStatement ps=mConnection.prepareStatement(query);
+			ps.setInt(1, playerid);
+			ps.setInt(2, matchid);
+			ps.setInt(3, itemid);
+			ps.executeQuery();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Failed to execute query: " + e.toString());
+		}
+	}
 }

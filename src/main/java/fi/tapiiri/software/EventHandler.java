@@ -70,5 +70,9 @@ public class EventHandler implements HttpHandler
 							Integer.parseInt(params.get("matchid")),
 							Integer.parseInt(params.get("itemid")));
 		}
+		else if(t.getRequestMethod().equals("DELETE"))
+		{
+			System.out.println("DELETE");
+		}
 	}
 }
