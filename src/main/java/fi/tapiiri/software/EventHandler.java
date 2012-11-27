@@ -71,7 +71,6 @@ public class EventHandler implements HttpHandler
 
 	public void handle(HttpExchange t)
 	{
-		boolean ok=false;
 		Headers headers = t.getResponseHeaders();
 		headers.add("Content-Type", "application/json");
 
@@ -97,31 +96,6 @@ public class EventHandler implements HttpHandler
 				System.out.println(e);
 			}
 			catch(JSONException e)
-			{
-				System.out.println(e);
-			}
-		}
-		else if(t.getRequestMethod().equals("DELETE"))
-		{
-			HashMap<String,String> params=parseParameters(t.getRequestBody());
-			ok=mDbc.DeleteEvent(Integer.parseInt(params.get("playerid")),
-							Integer.parseInt(params.get("matchid")),
-							Integer.parseInt(params.get("itemid")));
-
-			JSONObject responseobject=new JSONObject();
-			String response=new String();
-			try
-			{
-				try
-				{
-					responseobject.put("response", ok);
-					response=responseobject.toString();
-					t.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.getBytes().length);
-				}
-				catch(JSONException e) {}
-				t.getResponseBody().write(response.getBytes());
-			}
-			catch(IOException e)
 			{
 				System.out.println(e);
 			}
