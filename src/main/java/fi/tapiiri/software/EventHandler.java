@@ -3,6 +3,8 @@ package fi.tapiiri.software;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -76,9 +78,28 @@ public class EventHandler implements HttpHandler
 		if(t.getRequestMethod().equals("POST"))
 		{
 			HashMap<String,String> params=parseParameters(t.getRequestBody());
-			ok=mDbc.InsertEvent(Integer.parseInt(params.get("playerid")),
+			ResultSet rs=mDbc.InsertEvent(Integer.parseInt(params.get("playerid")),
 							Integer.parseInt(params.get("matchid")),
 							Integer.parseInt(params.get("itemid")));
+			String response=new String();
+			try
+			{
+				response=JSONConverter.toJSON(rs).toString();
+				t.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.getBytes().length);
+				t.getResponseBody().write(response.getBytes());
+			}
+			catch(SQLException e)
+			{
+				System.out.println(e);
+			}
+			catch(IOException e)
+			{
+				System.out.println(e);
+			}
+			catch(JSONException e)
+			{
+				System.out.println(e);
+			}
 		}
 		else if(t.getRequestMethod().equals("DELETE"))
 		{
@@ -86,23 +107,24 @@ public class EventHandler implements HttpHandler
 			ok=mDbc.DeleteEvent(Integer.parseInt(params.get("playerid")),
 							Integer.parseInt(params.get("matchid")),
 							Integer.parseInt(params.get("itemid")));
-		}
-		JSONObject responseobject=new JSONObject();
-		String response=new String();
-		try
-		{
+
+			JSONObject responseobject=new JSONObject();
+			String response=new String();
 			try
 			{
-				responseobject.put("response", ok);
-				response=responseobject.toString();
-				t.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.getBytes().length);
+				try
+				{
+					responseobject.put("response", ok);
+					response=responseobject.toString();
+					t.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.getBytes().length);
+				}
+				catch(JSONException e) {}
+				t.getResponseBody().write(response.getBytes());
 			}
-			catch(JSONException e) {}
-			t.getResponseBody().write(response.getBytes());
-		}
-		catch(IOException e)
-		{
-			System.out.println(e);
+			catch(IOException e)
+			{
+				System.out.println(e);
+			}
 		}
 	}
 }
