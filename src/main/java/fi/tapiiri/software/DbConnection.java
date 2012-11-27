@@ -73,7 +73,7 @@ public class DbConnection
 		return rs;
 	}
 
-	public void InsertEvent(int playerid, int matchid, int itemid)
+	public boolean InsertEvent(int playerid, int matchid, int itemid)
 	{
 		String query="INSERT INTO statistics_event (player_id, match_id, item_id) VALUES(?,?,?)";
 		try
@@ -82,15 +82,17 @@ public class DbConnection
 			ps.setInt(1, playerid);
 			ps.setInt(2, matchid);
 			ps.setInt(3, itemid);
-			ps.executeQuery();
+			int rows=ps.executeUpdate();
+			return rows>0;
 		}
 		catch(SQLException e)
 		{
 			System.out.println("Failed to execute query: " + e.toString());
 		}
+		return false;
 	}
 
-	public void DeleteEvent(int playerid, int matchid, int itemid)
+	public boolean DeleteEvent(int playerid, int matchid, int itemid)
 	{
 		String query="DELETE FROM statistics_event WHERE player_id=? AND match_id=? AND item_id=?";
 		try
@@ -99,11 +101,13 @@ public class DbConnection
 			ps.setInt(1, playerid);
 			ps.setInt(2, matchid);
 			ps.setInt(3, itemid);
-			ps.executeQuery();
+			int rows=ps.executeUpdate();
+			return rows>0;
 		}
 		catch(SQLException e)
 		{
 			System.out.println("Failed to execute query: " + e.toString());
 		}
+		return false;
 	}
 }
