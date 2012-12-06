@@ -3,6 +3,7 @@ package fi.tapiiri.software;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,12 +22,14 @@ public class DeleteHandler implements HttpHandler
 	private void sendResponse(HttpExchange t, boolean value)
 	{
 		JSONObject responseobject=new JSONObject();
+		JSONArray arr = new JSONArray();
 		String response=new String();
 		try
 		{
 			try
 			{
-				responseobject.put("response", value);
+				arr.put(value);
+				responseobject.put("response", arr);
 				response=responseobject.toString();
 				t.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.getBytes().length);
 			}

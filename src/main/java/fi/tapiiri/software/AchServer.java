@@ -19,6 +19,7 @@ public class AchServer
 			server.createContext("/players", new RequestHandler(dbc, "player"));
 			server.createContext("/matches", new RequestHandler(dbc, "match"));
 			server.createContext("/items", new RequestHandler(dbc, "statistics_item"));
+			server.createContext("/events", new RequestHandler(dbc, "statistics_event"));
 			server.setExecutor(null);
 			server.start();
 		} catch(IOException e)
