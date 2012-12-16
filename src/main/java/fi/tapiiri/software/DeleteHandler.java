@@ -47,14 +47,12 @@ public class DeleteHandler implements HttpHandler
 		if(t.getRequestMethod().equals("DELETE"))
 		{
 			String[] parts=t.getRequestURI().getPath().split("/");
-			if(parts.length != 5) // First part before / is empty
+			if(parts.length != 3) // First part before / is empty
 			{
 				sendResponse(t, false);
 				return;
 			}
-			boolean ok=mDbc.DeleteEvent(Integer.parseInt(parts[2]),
-							Integer.parseInt(parts[3]),
-							Integer.parseInt(parts[4]));
+			boolean ok=mDbc.DeleteEvent(Integer.parseInt(parts[2]));
 			sendResponse(t, ok);
 		}
 	}

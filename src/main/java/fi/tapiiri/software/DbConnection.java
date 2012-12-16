@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DbConnection
 {
@@ -78,19 +79,22 @@ public class DbConnection
 		String query="INSERT INTO statistics_event (player_id, match_id, item_id) VALUES(?,?,?)";
 		try
 		{
-			PreparedStatement ps=mConnection.prepareStatement(query);
+			PreparedStatement ps=mConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, playerid);
 			ps.setInt(2, matchid);
 			ps.setInt(3, itemid);
 			int rows=ps.executeUpdate();
 			if(rows>0)
 			{
+				return ps.getGeneratedKeys();
+				/*
 				query="SELECT * FROM statistics_event WHERE player_id=? AND match_id=? AND item_id=?";
 				ps=mConnection.prepareStatement(query);
 				ps.setInt(1, playerid);
 				ps.setInt(2, matchid);
 				ps.setInt(3, itemid);
 				return ps.executeQuery();
+				*/
 			}
 			else return null;
 		}
@@ -101,15 +105,13 @@ public class DbConnection
 		return null;
 	}
 
-	public boolean DeleteEvent(int playerid, int matchid, int itemid)
+	public boolean DeleteEvent(int eventid)
 	{
-		String query="DELETE FROM statistics_event WHERE player_id=? AND match_id=? AND item_id=?";
+		String query="DELETE FROM statistics_event WHERE statistics_event_id=?";
 		try
 		{
 			PreparedStatement ps=mConnection.prepareStatement(query);
-			ps.setInt(1, playerid);
-			ps.setInt(2, matchid);
-			ps.setInt(3, itemid);
+			ps.setInt(1, eventid);
 			int rows=ps.executeUpdate();
 			return rows>0;
 		}
