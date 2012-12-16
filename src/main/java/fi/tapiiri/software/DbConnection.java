@@ -30,6 +30,7 @@ public class DbConnection
 		catch(SQLException e)
 		{
 			System.out.println("Unable to get connection to the database: " + e.toString());
+			return null;
 		}
 		
 		return c;
@@ -91,18 +92,7 @@ public class DbConnection
 			ps.setInt(2, matchid);
 			ps.setInt(3, itemid);
 			int rows=ps.executeUpdate();
-			if(rows>0)
-			{
-				return ps.getGeneratedKeys();
-				/*
-				query="SELECT * FROM statistics_event WHERE player_id=? AND match_id=? AND item_id=?";
-				ps=mConnection.prepareStatement(query);
-				ps.setInt(1, playerid);
-				ps.setInt(2, matchid);
-				ps.setInt(3, itemid);
-				return ps.executeQuery();
-				*/
-			}
+			if(rows>0) return ps.getGeneratedKeys();
 			else return null;
 		}
 		catch(SQLException e)
