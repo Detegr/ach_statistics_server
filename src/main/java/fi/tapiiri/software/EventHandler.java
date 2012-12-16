@@ -15,6 +15,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.Headers;
 
+/**
+ * Responds to POST-requests
+ */
 public class EventHandler implements HttpHandler
 {
 	private DbConnection mDbc;
@@ -24,6 +27,11 @@ public class EventHandler implements HttpHandler
 		mDbc=dbc;
 	}
 
+	/**
+	 * Parses parameters from POST-request to a HashMap.
+	 * @param b InputStream of POST-parameters
+	 * @return Hashmap of POST-parameters
+	 */
 	HashMap<String,String> parseParameters(InputStream b)
 	{
 		Scanner s=new Scanner(b);

@@ -11,6 +11,9 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.Headers;
 
+/**
+ * Responds to GET-requests
+ */
 public class RequestHandler implements HttpHandler
 {
 	private DbConnection mDbc;

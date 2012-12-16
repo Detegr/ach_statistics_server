@@ -74,6 +74,13 @@ public class DbConnection
 		return rs;
 	}
 
+	/**
+	 * Inserts an event to the database
+	 * @param playerid Player id of the event
+	 * @param matchid Match id of the event
+	 * @param itemid Item id of the event
+	 * @return ResultSet which contains the inserted event
+	 */
 	public ResultSet InsertEvent(int playerid, int matchid, int itemid)
 	{
 		String query="INSERT INTO statistics_event (player_id, match_id, item_id) VALUES(?,?,?)";
@@ -105,6 +112,12 @@ public class DbConnection
 		return null;
 	}
 
+	/**
+	 * Deletes event from the database
+	 *
+	 * @param eventid Event id to delete
+	 * @return Boolaen value if the deletion succeeded
+	 */
 	public boolean DeleteEvent(int eventid)
 	{
 		String query="DELETE FROM statistics_event WHERE statistics_event_id=?";

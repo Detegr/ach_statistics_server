@@ -10,6 +10,9 @@ import org.json.JSONObject;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+/**
+ * Responds to DELETE-requests.
+ */
 public class DeleteHandler implements HttpHandler
 {
 	private DbConnection mDbc;
